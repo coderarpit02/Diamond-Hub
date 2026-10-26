@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#ffffff">
+<title>Diamond Hub</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --blue: #2878f0;
+    --cyan: #40c8ed;
+    --bg: #f4f7fc;
+    --text: #192438;
+    --muted: #77849a;
+    --border: #e4eaf3;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button, input {
+    font: inherit;
+}
+
+.topbar {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#2878f0,#40c8ed);
+    border-radius: 12px;
+    font-size: 23px;
+}
+
+.brand-name {
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.brand-sub {
+    color: var(--muted);
+    font-size: 9px;
+    margin-top: 3px;
+    letter-spacing: 1.2px;
+}
+
+.online {
+    color: #16834c;
+    font-size: 11px;
+}
+
+.online span {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #22c477;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+main {
+    max-width: 480px;
+    margin: auto;
+    padding: 22px 16px 35px;
+}
+
+.hero {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.hero-art {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 20px;
+    border-radius: 28px;
+    display: grid;
+    place-items: center;
+    font-size: 57px;
+    background: linear-gradient(135deg,#e1edff,#e0faff);
+    border: 1px solid #c9e2ff;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+.eyebrow {
+    color: var(--blue);
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+h1 {
+    font-size: clamp(27px,7vw,35px);
+    letter-spacing: -1px;
+}
+
+h1 span {
+    color: var(--blue);
+}
+
+.hero p {
+    max-width: 310px;
+    margin: 12px auto 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.panel {
+    padding: 22px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 7px 28px rgba(35,60,100,.045);
+}
+
+.panel-title {
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.panel-subtitle {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+    margin-bottom: 22px;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 9px;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 13px;
+    top: 13px;
+}
+
+input {
+    width: 100%;
+    height: 47px;
+    border: 1px solid #dce4f0;
+    border-radius: 10px;
+    background: #f9fbff;
+    padding: 0 13px 0 42px;
+    color: var(--text);
+    outline: none;
+    font-size: 13px;
+}
+
+input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px #2878f012;
+}
+
+input::placeholder {
+    color: #9aa6b8;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 10px;
+    margin: 8px 0 22px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 10px;
+}
+
+.amount {
+    padding: 14px 12px;
+    text-align: left;
+    background: #fbfcff;
+    border: 1px solid #e2e9f4;
+    border-radius: 12px;
+    cursor: pointer;
+    color: var(--text);
+    transition: .2s;
+}
+
+.amount:active {
+    transform: scale(.98);
+}
+
+.amount.selected {
+    background: #edf5ff;
+    border-color: var(--blue);
+    box-shadow: inset 0 0 0 1px #2878f018;
+}
+
+.amount-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gem {
+    font-size: 21px;
+}
+
+.check {
+    width: 17px;
+    height: 17px;
+    border: 1px solid #cbd5e1;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 10px;
+    color: transparent;
+}
+
+.selected .check {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue);
+}
+
+.amount-number {
+    font-size: 18px;
+    font-weight: 800;
+    margin-top: 9px;
+}
+
+.amount-caption {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+.primary {
+    width: 100%;
+    min-height: 51px;
+    border: 0;
+    border-radius: 11px;
+    margin-top: 22px;
+    background: linear-gradient(100deg,#2878f0,#40bfea);
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 5px 15px #2878f025;
+}
+
+.primary:disabled {
+    opacity: .65;
+}
+
+.notice {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 13px;
+    border: 1px solid #f0e2bb;
+    background: #fffaf0;
+    border-radius: 10px;
+    color: #79643b;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+footer {
+    text-align: center;
+    padding: 23px 15px;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 10px;
+    line-height: 1.8;
+}
+
+/* Loading screen */
+
+.loading-overlay,
+.success-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(28,42,64,.42);
+    backdrop-filter: blur(5px);
+}
+
+.loading-overlay.show,
+.success-overlay.show {
+    display: flex;
+    animation: fadeIn .2s ease;
+}
+
+.loading-box {
+    width: 100%;
+    max-width: 310px;
+    background: white;
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 20px 60px #17243825;
+}
+
+.spinner {
+    width: 43px;
+    height: 43px;
+    margin: 0 auto 17px;
+    border: 4px solid #e3edf8;
+    border-top-color: var(--blue);
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+.loading-box h2 {
+    font-size: 19px;
+    margin-bottom: 8px;
+}
+
+.loading-box p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Success popup */
+
+.success-modal {
+    width: 100%;
+    max-width: 345px;
+    background: white;
+    border-radius: 22px;
+    padding: 27px 22px 22px;
+    text-align: center;
+    box-shadow: 0 22px 70px rgba(0,0,0,.2);
+    animation: popIn .3s ease;
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(.85);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.success-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 15px;
+    display: grid;
+    place-items: center;
+    background: #dcfce7;
+    border-radius: 50%;
+    color: #16a34a;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.success-modal h2 {
+    color: #16a34a;
+    font-size: 23px;
+    margin-bottom: 6px;
+}
+
+.success-subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 21px;
+}
+
+.success-info {
+    background: #f5f8fd;
+    border: 1px solid #e5ebf4;
+    border-radius: 12px;
+    padding: 13px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.success-label {
+    color: #8290a4;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.success-value {
+    color: #172438;
+    font-size: 17px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.success-diamonds {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.success-diamonds .gem {
+    font-size: 29px;
+}
+
+.success-note {
+    color: #78643b;
+    background: #fff8e8;
+    border-radius: 9px;
+    padding: 10px;
+    font-size: 10px;
+    line-height: 1.6;
+    margin-top: 14px;
+}
+
+.close-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 16px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(100deg,#2878f0,#40bfea);
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media(max-width:350px) {
+    main { padding: 15px 11px 28px; }
+    .panel { padding: 16px; }
+    .amount { padding: 12px 9px; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <div class="logo">💎</div>
+        <div>
+            <div class="brand-name">DIAMOND HUB</div>
+            <div class="brand-sub">FAN-MADE INTERFACE</div>
+        </div>
+    </div>
+    <div class="online">
+        <span></span> Interface ready
+    </div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <div class="hero-art">💎</div>
+        <div class="eyebrow">GAMING INTERFACE</div>
+        <h1>Diamond <span>Generator</span></h1>
+        <p>Choose a quantity and preview the generator interface.</p>
+    </section>
+
+    <section class="panel">
+        <div class="panel-title">Player Information</div>
+        <div class="panel-subtitle">
+            Enter a numeric UID and select a diamond quantity.
+        </div>
+
+        <form id="generatorForm">
+            <label for="uid">PLAYER UID</label>
+
+            <div class="input-wrap">
+                <span class="input-icon">🆔</span>
+                <input
+                    id="uid"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="off"
+                    maxlength="20"
+                    placeholder="Enter your player UID"
+                    required
+                >
+            </div>
+
+            <div class="hint">Enter 5–20 numeric digits.</div>
+
+            <label>SELECT DIAMOND AMOUNT</label>
+
+            <div class="grid">
+                <button class="amount selected" type="button" data-amount="100">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">100</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+
+                <button class="amount" type="button" data-amount="310">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">310</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+
+                <button class="amount" type="button" data-amount="520">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">520</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+
+                <button class="amount" type="button" data-amount="1060">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">1060</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+
+                <button class="amount" type="button" data-amount="2180">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">2180</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+
+                <button class="amount" type="button" data-amount="5600">
+                    <div class="amount-top">
+                        <span class="gem">💎</span>
+                        <span class="check">✓</span>
+                    </div>
+                    <div class="amount-number">5600</div>
+                    <div class="amount-caption">Diamonds · Preview</div>
+                </button>
+            </div>
+
+            <button class="primary" id="generateBtn" type="submit">
+                GENERATE PREVIEW &nbsp; →
+            </button>
+        </form>
+
+        <div class="notice">
+            <span>ⓘ</span>
+            <div>
+                <strong>Fan-made interface.</strong>
+                This website does not connect to Free Fire servers or
+                deliver real diamonds. Never enter your game password.
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    DIAMOND HUB · INDEPENDENT FAN PROJECT<br>
+    Not affiliated with Garena or Free Fire.
+</footer>
+
+<!-- Loading popup -->
+
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <h2>Processing...</h2>
+        <p>Preparing your preview. Please wait.</p>
+    </div>
+</div>
+
+<!-- Success popup -->
+
+<div class="success-overlay" id="successOverlay"
+     role="dialog" aria-modal="true"
+     aria-labelledby="successHeading">
+
+    <div class="success-modal">
+        <div class="success-icon">✓</div>
+
+        <h2 id="successHeading">SUCCESSFUL!</h2>
+
+        <p class="success-subtitle">
+            Generator preview completed
+        </p>
+
+        <div class="success-info">
+            <div class="success-label">PLAYER UID</div>
+            <div class="success-value" id="popupUID"></div>
+        </div>
+
+        <div class="success-info">
+            <div class="success-label">SELECTED DIAMONDS</div>
+            <div class="success-diamonds">
+                <span class="gem">💎</span>
+                <span class="success-value" id="popupDiamonds"></span>
+            </div>
+        </div>
+
+        <div class="success-note">
+            Preview successful. No real diamonds were generated or
+            added to any game account.
+        </div>
+
+        <button class="close-btn" id="closePopup">
+            OK, GOT IT
+        </button>
+    </div>
+</div>
+
+<script>
+const form = document.getElementById("generatorForm");
+const uidInput = document.getElementById("uid");
+const generateBtn = document.getElementById("generateBtn");
+
+const loadingOverlay = document.getElementById("loadingOverlay");
+const successOverlay = document.getElementById("successOverlay");
+const popupUID = document.getElementById("popupUID");
+const popupDiamonds = document.getElementById("popupDiamonds");
+const closePopup = document.getElementById("closePopup");
+
+const amountButtons = document.querySelectorAll(".amount");
+
+let selectedAmount = "100";
+let processing = false;
+
+amountButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        if (processing) return;
+
+        amountButtons.forEach(item => {
+            item.classList.remove("selected");
+        });
+
+        button.classList.add("selected");
+        selectedAmount = button.dataset.amount;
+    });
+});
+
+function openSuccessPopup(uid, amount) {
+    popupUID.textContent = uid;
+    popupDiamonds.textContent =
+        Number(amount).toLocaleString("en-US") + " Diamonds";
+
+    successOverlay.classList.add("show");
+    closePopup.focus();
+}
+
+function closeSuccessPopup() {
+    successOverlay.classList.remove("show");
+}
+
+form.addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (processing) return;
+
+    const uid = uidInput.value.trim();
+
+    if (!/^\d{5,20}$/.test(uid)) {
+        uidInput.setCustomValidity(
+            "Please enter a numeric UID containing 5–20 digits."
+        );
+        uidInput.reportValidity();
+        uidInput.setCustomValidity("");
+        return;
+    }
+
+    processing = true;
+    generateBtn.disabled = true;
+    generateBtn.textContent = "PROCESSING...";
+
+    loadingOverlay.classList.add("show");
+
+    setTimeout(() => {
+        loadingOverlay.classList.remove("show");
+
+        openSuccessPopup(uid, selectedAmount);
+
+        generateBtn.disabled = false;
+        generateBtn.textContent = "GENERATE AGAIN →";
+
+        processing = false;
+    }, 1500);
+});
+
+closePopup.addEventListener("click", closeSuccessPopup);
+
+successOverlay.addEventListener("click", event => {
+    if (event.target === successOverlay) {
+        closeSuccessPopup();
+    }
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeSuccessPopup();
+    }
+});
+</script>
+
+</body>
+</html>
